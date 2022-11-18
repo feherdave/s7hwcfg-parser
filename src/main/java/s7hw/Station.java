@@ -3,16 +3,20 @@ package s7hw;
 import s7hw.cfgfile.CfgFileSection;
 import s7hw.cfgfile.S7HWCfgFileFormatException;
 import s7hw.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import s7hw.module.SlotModule;
+import s7hw.module.SubSlotModule;
+import s7hw.module.SubsystemRackSlotModule;
+import s7hw.rack.Rack;
+import s7hw.rack.SubsystemRack;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Station {
+public class Station extends HWComponent {
 
     public enum StationType { NOT_IMPLEMENTED, S7_300, S7_400 }
 
-    private Map<String, String> stationData = new HashMap<>();
     private String stationName;
     private StationType stationType = StationType.NOT_IMPLEMENTED;
     private Map<Integer, Rack> racks = new LinkedHashMap<>();
@@ -87,20 +91,8 @@ public class Station {
             };
             this.stationName = m.group("stationname");
 
-            // Store data part
-            stationSection
-                    .getSectionData()
-                    .stream()
-                    .dropWhile(data -> data.matches("BEGIN"))
-                    .takeWhile(data -> !data.matches("END"))
-                    .forEach(line -> {
-                        Pattern dataKeyValuePair = Pattern.compile("^(?<key>\\w+)\\s+\\\"(?<value>\\w*)\\\"$");
-                        Matcher dataKeyValuePairMatcher = dataKeyValuePair.matcher(line);
-
-                        if (dataKeyValuePairMatcher.matches()) {
-                            stationData.put(dataKeyValuePairMatcher.group("key"), dataKeyValuePairMatcher.group("value"));
-                        }
-                    });
+            // Parse configuration data
+            super.parseConfigurationData(stationSection.getConfigurationData());
         } else {
             throw new S7HWCfgFileSectionFormatErrorException("Format error in STATION section.");
         }
@@ -112,14 +104,16 @@ public class Station {
         sectionData.removeAll(parseSubnets(sectionData));
 
         // Add modules to racks
-        sectionData.removeAll(parseModules(sectionData));
+        sectionData.removeAll(parseSlotModules(sectionData));
 
         // Add submodules to modules
+        sectionData.removeAll(parseSubSlotModules(sectionData));
 
         // Add subsystem racks
         sectionData.removeAll(parseSubsystemRacks(sectionData));
 
-        System.out.println();
+        // Add modules to subsystem racks
+        sectionData.removeAll(parseSubsystemRackSlotModules(sectionData));
     }
 
     /**
@@ -147,19 +141,43 @@ public class Station {
      * @param sectionData
      * @return List<CfgFileSection> Sublist of processed module sections for further use.
      */
-    private List<CfgFileSection> parseModules(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
-        List<CfgFileSection> moduleSections = sectionData.stream()
+    private List<CfgFileSection> parseSlotModules(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
+        List<CfgFileSection> slotModuleSections = sectionData.stream()
                 .filter(data -> data.getSectionHeader().matches(SlotModule.SECTION_HEADER_REGEXP))
                 .toList();
 
         // This is only for exception handling
-        for (CfgFileSection sect : moduleSections) {
-            SlotModule module = SlotModule.fromSectionData(sect, this);
+        for (CfgFileSection sect : slotModuleSections) {
+            SlotModule slotModule = SlotModule.fromSectionData(sect, this);
 
-            racks.get(module.getRackNumber()).addModule(module);
+            racks.get(slotModule.getRackNumber()).addModule(slotModule);
         }
 
-        return moduleSections;
+        return slotModuleSections;
+    }
+
+    /**
+     * Parses section data list for slot submodules.
+     *
+     * @param sectionData
+     * @return List<CfgFileSection> Sublist of processed module sections for further use.
+     */
+    private List<CfgFileSection> parseSubSlotModules(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
+        List<CfgFileSection> subSlotModuleSections = sectionData.stream()
+                .filter(data -> data.getSectionHeader().matches(SubSlotModule.SECTION_HEADER_REGEXP))
+                .toList();
+
+        // This is only for exception handling
+        for (CfgFileSection sect : subSlotModuleSections) {
+            SubSlotModule subSlotModule = SubSlotModule.fromSectionData(sect, this);
+
+            racks
+                    .get(subSlotModule.getRackNumber())
+                    .getModule(subSlotModule.getSlotNumber())
+                    .addModule(subSlotModule.getSubslotNumber(), subSlotModule);
+        }
+
+        return subSlotModuleSections;
     }
 
     /**
@@ -200,6 +218,25 @@ public class Station {
         }
 
         return subsystemModuleSections;
+    }
+
+    /**
+     * Parses section data list of subsystem rack slot modules.
+     *
+     * @param sectionData
+     * @return List<CfgFileSection> Sublist of processed subsystem racks for further use.
+     */
+    private List<CfgFileSection> parseSubsystemRackSlotModules(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
+        List<CfgFileSection> subsystemRackSlotModuleSections = sectionData.stream()
+                .filter(data -> data.getSectionHeader().matches(SubsystemRackSlotModule.SECTION_HEADER_REGEXP))
+                .toList();
+
+        // This is only for exception handling
+        for (CfgFileSection sect : subsystemRackSlotModuleSections) {
+            SubsystemRackSlotModule.fromSectionData(sect, this);
+        }
+
+        return subsystemRackSlotModuleSections;
     }
 
     @Override

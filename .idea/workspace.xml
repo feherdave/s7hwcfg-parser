@@ -4,30 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="54344c3b-c9e7-41a1-9129-999eb7900544" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/HWConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/Module.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/Rack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/SlotModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/Station.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/Subnet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/SubsystemRack.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFileSection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/S7HWCfgFileFormatException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/S7HWCfgFileSectionFormatErrorException.java" afterDir="false" />
+    <list default="true" id="54344c3b-c9e7-41a1-9129-999eb7900544" name="Changes" comment="Initial commit.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/HWComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/module/SubSlotModule.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/module/SubsystemRackSlotModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/HWConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/HWConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/module/Module.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Rack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/rack/Rack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/SlotModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/module/SlotModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Subnet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/Subnet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/SubsystemRack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/rack/SubsystemRack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/STEP7HWCfgFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFileSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFileSection.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,21 +51,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.44533944",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.44533944&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="s7hw.cfgfile" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="s7hw.module" />
+      <recent name="s7hw.rack" />
+      <recent name="s7hw" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="s7hw.module" />
       <recent name="s7hw" />
     </key>
   </component>
@@ -86,6 +84,14 @@
       <option name="presentableId" value="Default" />
       <updated>1668758834509</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial commit.">
+      <created>1668784552514</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1668784552514</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -99,24 +105,44 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial commit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial commit." />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/s7hw/Station.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="26" />
+          <url>file://$PROJECT_DIR$/src/main/java/main/Main.java</url>
+          <line>15</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/s7hw/HWComponent.java</url>
+          <line>87</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/s7hw/HWComponent.java</url>
+          <line>119</line>
+          <option name="timeStamp" value="39" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="s7hw.Station" memberName="subnets" />
+        <PinnedItemInfo parentTag="s7hw.HWConfig" memberName="racks" />
+        <PinnedItemInfo parentTag="s7hw.SlotModule" memberName="subModules" />
+        <PinnedItemInfo parentTag="java.util.LinkedHashMap$Entry" memberName="key" />
       </pinned-members>
     </pin-to-top-manager>
     <watches-manager>
       <configuration name="GradleRunConfiguration">
         <watch expression="((Station)this).subnets" custom="s7hw.Station" />
+        <watch expression="((LinkedHashMap.Entry)((LinkedHashMap)((Rack)((LinkedHashMap.Entry)((LinkedHashMap)((Station)this).racks).entrySet().toArray()[0]).getValue()).slots).entrySet().toArray()[1]).getValue()" custom="java.util.LinkedHashMap,s7hw.Rack,s7hw.Station,java.util.LinkedHashMap.Entry" />
+        <watch expression="res" />
+        <watch expression="hwConfig.station.racks" />
       </configuration>
     </watches-manager>
   </component>

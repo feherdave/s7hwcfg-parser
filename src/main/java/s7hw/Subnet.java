@@ -3,13 +3,14 @@ package s7hw;
 import com.google.gson.internal.LinkedTreeMap;
 import s7hw.cfgfile.CfgFileSection;
 import s7hw.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import s7hw.module.Module;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Subnet {
+public class Subnet extends HWComponent {
 
     public static String SECTION_HEADER_REGEXP = "^(?<type>DPSUBSYSTEM|IOSUBSYSTEM)\\s+(?<number>[0-9]+)\\s*,\\s*\\\"(?<name>.+?)\\\"\\s*$";
 
@@ -51,20 +52,8 @@ public class Subnet {
 
             Subnet res = new Subnet(type, name, number);
 
-            // Store data part
-            section
-                    .getSectionData()
-                    .stream()
-                    .dropWhile(data -> data.matches("BEGIN"))
-                    .takeWhile(data -> !data.matches("END"))
-                    .forEach(line -> {
-                        Pattern dataKeyValuePair = Pattern.compile("^(?<key>\\w+)\\s+\\\"(?<value>\\w*)\\\"$");
-                        Matcher dataKeyValuePairMatcher = dataKeyValuePair.matcher(line);
-
-                        if (dataKeyValuePairMatcher.matches()) {
-                            res.putData(dataKeyValuePairMatcher.group("key"), dataKeyValuePairMatcher.group("value"));
-                        }
-                    });
+            // Parse configuration data
+            res.parseConfigurationData(section.getConfigurationData());
 
             return res;
         } else {
@@ -90,6 +79,10 @@ public class Subnet {
      */
     public void attachNode(Integer address, Module node) {
         this.nodes.put(address, node);
+    }
+
+    public Module getNode(Integer address) {
+        return nodes.get(address);
     }
 
     public String getName() {

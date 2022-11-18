@@ -12,9 +12,10 @@ public class Main {
 
         try {
             HWConfig hwConfig = HWConfig.readFromFile(new File("D:\\tmp\\cpu04.cfg"));
+
+            System.out.println();
         } catch (S7HWCfgFileFormatException | IOException | S7HWCfgFileSectionFormatErrorException e) {
             System.out.println(e.getMessage());
         }
-
     }
 }
