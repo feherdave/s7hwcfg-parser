@@ -1,10 +1,10 @@
-package s7hw.module;
+package org.feherdave.s7hwcfg.module;
 
-import s7hw.HWComponent;
-import s7hw.Station;
-import s7hw.Subnet;
-import s7hw.cfgfile.CfgFileSection;
-import s7hw.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.HWComponent;
+import org.feherdave.s7hwcfg.Station;
+import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.Subnet;
+import org.feherdave.s7hwcfg.cfgfile.CfgFileSection;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class SubSlotModule extends HWComponent implements Module {
 
     public enum BusRole { ROLE_UNDEFINED, ROLE_MASTER, ROLE_SLAVE }
-    public static String SECTION_HEADER_REGEXP = "^RACK\\s+(?<rackNumber>[0-9]+)\\s*,\\s*SLOT\\s+(?<slotNumber>[0-9]+)\\s*,\\s*SUBSLOT\\s+(?<subslotNumber>[0-9]+)\\s*,\\s*\\\"(?<orderNumber>.+?)\\\"\\s*(?:\\\"(?<version>.+?)\\\")?\\s*,\\s*\\\"(?<name>.+?)\\\"\\s*$";
+    public static String SECTION_HEADER_REGEXP = "^RACK\\s+(?<rackNumber>[0-9]+)\\s*,\\s*SLOT\\s+(?<slotNumber>[0-9]+)\\s*,\\s*SUBSLOT\\s+(?<subslotNumber>[0-9]+)\\s*,\\s*\"(?<orderNumber>.+?)\"\\s*(?:\"(?<version>.+?)\")?\\s*,\\s*\"(?<name>.+?)\"\\s*$";
 
     private Integer rackNumber;
     private Integer slotNumber;
@@ -66,7 +66,7 @@ public class SubSlotModule extends HWComponent implements Module {
             SubSlotModule res = new SubSlotModule(rackNumber, slotNumber, subslotNumber, orderNumber, version, name);
 
             // Check additional data (e.g. the module is a bus participant)
-            List<String> parameters = section.getConfigurationData().stream().takeWhile(s -> !s.equals("BEGIN")).toList();
+            List<String> parameters = section.getSectionHeaderOptions();
             String busSettingsRegex = "^MASTER (DPSUBSYSTEM|IOSUBSYSTEM)\\s+(?<subsysnumber>[0-9]+)\\s*,.*DPADDRESS\\s+(?<address>[0-9]+)$";
             Optional<String> busSettingString = parameters.stream().filter(line -> line.matches(busSettingsRegex)).findFirst();
 
@@ -149,6 +149,11 @@ public class SubSlotModule extends HWComponent implements Module {
     @Override
     public void addModule(Integer slotNumber, Module module) {
         throw new UnsupportedOperationException("No more modules can be added to a subslot.");
+    }
+
+    @Override
+    public Module getModule(Integer slotNumber) {
+        return null;
     }
 
 }

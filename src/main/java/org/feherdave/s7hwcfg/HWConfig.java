@@ -1,8 +1,8 @@
-package s7hw;
+package org.feherdave.s7hwcfg;
 
-import s7hw.cfgfile.STEP7HWCfgFile;
-import s7hw.cfgfile.S7HWCfgFileFormatException;
-import s7hw.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.cfgfile.STEP7HWCfgFile;
+import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileFormatException;
+import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileSectionFormatErrorException;
 import java.io.File;
 import java.io.IOException;
 

@@ -1,17 +1,12 @@
-package s7hw.cfgfile;
+package org.feherdave.s7hwcfg.cfgfile;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class CfgFile {
+public class STEP7HWCfgFile {
 
     enum FileFormat { READABLE, COMPACT }
 
@@ -20,58 +15,52 @@ public class CfgFile {
     private Map<String, String> metaData = new HashMap<>();
     private List<CfgFileSection> sectionData = new ArrayList<>();
 
-    public CfgFile(File file) throws S7HWCfgFileFormatException, IOException {
+    public STEP7HWCfgFile(File file) throws S7HWCfgFileFormatException, IOException {
 
-        FileInputStream fis = new FileInputStream(file);
-        InputStreamReader isr = new InputStreamReader(fis);
-        BufferedReader br = new BufferedReader(isr);
+        try (Scanner scanner = new Scanner(file)) {
 
-        List<String> lines = br.lines().collect(Collectors.toList());
-
-        if (lines.size() == 0) {
-            throw new S7HWCfgFileFormatException("File too short (line count 0).");
-        }
-
-        List<String> headerLines = new ArrayList<>();
-        List<String> sectionLines = new ArrayList<>();
-
-        ListIterator<String> iter = lines.listIterator();
-
-        // Read lines
-        if (iter.hasNext()) {
-
-            // Read header
-            boolean contentStartFound = false;
-            String line = "";
-
-            do {
-                line = iter.next();
-
-                contentStartFound = line.startsWith("STATION");
-
-                if (!contentStartFound) {
-                    headerLines.add(line);
-                }
-            } while (iter.hasNext() && !contentStartFound);
-
-            if (!contentStartFound) {
-                throw new S7HWCfgFileFormatException("STATION section missing.");
+            if (!scanner.hasNext()) {
+                throw new S7HWCfgFileFormatException("File too short (line count 0).");
             }
 
-            // Read content
+            List<String> headerLines = new ArrayList<>();
+            List<String> sectionLines = new ArrayList<>();
 
-            do {
-                sectionLines.add(line);
+            // Read lines
+            if (scanner.hasNext()) {
 
-                if (iter.hasNext()) {
-                    line = iter.next();
+                // Read header
+                boolean contentStartFound = false;
+                String line;
+
+                do {
+                    line = scanner.nextLine();
+
+                    contentStartFound = line.startsWith("STATION");
+
+                    if (!contentStartFound) {
+                        headerLines.add(line);
+                    }
+                } while (scanner.hasNext() && !contentStartFound);
+
+                if (!contentStartFound) {
+                    throw new S7HWCfgFileFormatException("STATION section missing.");
                 }
-            } while (iter.hasNext());
 
-            parseHeader(headerLines);
-            readSections(sectionLines);
+                // Read content
+
+                do {
+                    sectionLines.add(line);
+
+                    if (scanner.hasNext()) {
+                        line = scanner.nextLine();
+                    }
+                } while (scanner.hasNext());
+
+                parseHeader(headerLines);
+                readSections(sectionLines);
+            }
         }
-
     }
 
     /**
@@ -103,7 +92,7 @@ public class CfgFile {
 
                             if (m.matches()) {
                                 metaData.put(m.group("metatag"), m.group("metadata"));
-                            };
+                            }
                         }
                     );
 
@@ -132,7 +121,7 @@ public class CfgFile {
                     sectionStringData.add(line.trim());
                 } else {
                     if (!sectionStringData.get(sectionStringData.size() - 1).equals("END")) {
-                        throw new S7HWCfgFileFormatException("END missing in the following section: " + sectionStringData.stream().collect(Collectors.joining("\n")));
+                        throw new S7HWCfgFileFormatException("END missing in the following section: " + String.join("\n", sectionStringData));
                     }
 
                     sectionData.add(new CfgFileSection(sectionStringData));

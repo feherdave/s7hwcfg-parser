@@ -1,26 +1,26 @@
-package s7hw;
+package org.feherdave.s7hwcfg;
 
-import com.google.gson.internal.LinkedTreeMap;
-import s7hw.cfgfile.CfgFileSection;
-import s7hw.cfgfile.S7HWCfgFileSectionFormatErrorException;
-import s7hw.module.Module;
+import org.feherdave.s7hwcfg.cfgfile.CfgFileSection;
+import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.module.Module;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Subnet extends HWComponent {
 
-    public static String SECTION_HEADER_REGEXP = "^(?<type>DPSUBSYSTEM|IOSUBSYSTEM)\\s+(?<number>[0-9]+)\\s*,\\s*\\\"(?<name>.+?)\\\"\\s*$";
+    public static String SECTION_HEADER_REGEXP = "^(?<type>DPSUBSYSTEM|IOSUBSYSTEM)\\s+(?<number>[0-9]+)\\s*,\\s*\"(?<name>.+?)\"\\s*$";
 
     public enum SubnetType { NOT_IMPLEMENTED, PROFIBUS_DP, INDUSTRIAL_ETHERNET }
 
-    private SubnetType subnetType = SubnetType.NOT_IMPLEMENTED;
+    private SubnetType subnetType;
     private String name;
     private Integer number;
     private Map<String, String> subnetData = new HashMap<>();
-    private Map<Integer, Module> nodes = new LinkedTreeMap<>();
+    private Map<Integer, Module> nodes = new LinkedHashMap<>();
 
     public Subnet(SubnetType type, String name, Integer number) {
         this.subnetType = type;
@@ -44,11 +44,18 @@ public class Subnet extends HWComponent {
             Integer number = Integer.parseInt(m.group("number"));
             String name = m.group("name");
 
-            SubnetType type = switch(typeString) {
-                case "DPSUBSYSTEM" -> SubnetType.PROFIBUS_DP;
-                case "IOSUBSYSTEM" -> SubnetType.INDUSTRIAL_ETHERNET;
-                default -> SubnetType.NOT_IMPLEMENTED;
-            };
+            SubnetType type;
+
+            switch(typeString) {
+                case "DPSUBSYSTEM":
+                    type = SubnetType.PROFIBUS_DP;
+                    break;
+                case "IOSUBSYSTEM":
+                    type = SubnetType.INDUSTRIAL_ETHERNET;
+                    break;
+                default:
+                    type = SubnetType.NOT_IMPLEMENTED;
+            }
 
             Subnet res = new Subnet(type, name, number);
 

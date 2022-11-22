@@ -1,4 +1,4 @@
-package s7hw.cfgfile;
+package org.feherdave.s7hwcfg.cfgfile;
 
 public class S7HWCfgFileSectionFormatErrorException extends Exception {
 

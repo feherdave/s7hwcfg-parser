@@ -5,21 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54344c3b-c9e7-41a1-9129-999eb7900544" name="Changes" comment="Initial commit.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/HWComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/module/SubSlotModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/s7hw/module/SubsystemRackSlotModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/HWComponent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/module/Module.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/system/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/HWConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/HWConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/module/Module.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Rack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/rack/Rack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/SlotModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/module/SlotModule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/Station.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Subnet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/Subnet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/SubsystemRack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/rack/SubsystemRack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/STEP7HWCfgFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFileSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFileSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/main/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/HWComponent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/HWConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/HWConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Module.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Rack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/SlotModule.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/Subnet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/Subnet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/SubsystemRack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/cfgfile/CfgFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/CfgFileSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/cfgfile/CfgFileSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/S7HWCfgFileFormatException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/cfgfile/S7HWCfgFileFormatException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/S7HWCfgFileSectionFormatErrorException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/cfgfile/S7HWCfgFileSectionFormatErrorException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/cfgfile/STEP7HWCfgFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/cfgfile/STEP7HWCfgFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/module/Module.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/module/SlotModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/module/SlotModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/module/SubSlotModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/module/SubSlotModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/module/SubsystemRackSlotModule.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/module/SubsystemRackSlotModule.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/rack/Rack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/rack/Rack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/s7hw/rack/SubsystemRack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/feherdave/s7hwcfg/rack/SubsystemRack.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,17 +43,59 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+    <projectState path="$PROJECT_DIR$/../s7hwcfg-parser-module/s7hwcfg-parser-module">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/s7hwcfg-parser-module">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/../s7hwcfg-parser-module/s7hwcfg-parser-module">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="s7hwcfg-parser" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="s7hwcfg-parser" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="s7hwcfg-parser" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="module-info" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -51,19 +106,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.44533944&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "jdk.selected.JAVA_MODULE": "jbr-11",
+    "last_opened_file_path": "D:/tmp/git/s7hwcfg-parser-module/s7hwcfg-parser-module/src/main/java",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.44533944",
+    "settings.editor.selected.configurable": "MavenSettings"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="s7hw.cfgfile" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\tmp\git\s7hwcfg-parser-module\s7hwcfg-parser-module\src\main\java" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="s7hw.module" />
@@ -74,6 +134,34 @@
       <recent name="s7hw.module" />
       <recent name="s7hw" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="s7hwcfg-parser [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.s7hwcfg-parser [jar]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -91,7 +179,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668784552514</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Initial commit.">
+      <created>1669041919710</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1669041919710</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -117,16 +212,6 @@
           <line>15</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/s7hw/HWComponent.java</url>
-          <line>87</line>
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/s7hw/HWComponent.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="39" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
@@ -143,6 +228,8 @@
         <watch expression="((LinkedHashMap.Entry)((LinkedHashMap)((Rack)((LinkedHashMap.Entry)((LinkedHashMap)((Station)this).racks).entrySet().toArray()[0]).getValue()).slots).entrySet().toArray()[1]).getValue()" custom="java.util.LinkedHashMap,s7hw.Rack,s7hw.Station,java.util.LinkedHashMap.Entry" />
         <watch expression="res" />
         <watch expression="hwConfig.station.racks" />
+        <watch expression="((SubsystemRack)((com.google.gson.internal.LinkedTreeMap.Node)((com.google.gson.internal.LinkedTreeMap)((Subnet)((LinkedHashMap.Entry)((LinkedHashMap)hwConfig.station.subnets).entrySet().toArray()[0]).getValue()).nodes).entrySet().toArray()[31]).getValue()).modules" custom="java.util.LinkedHashMap,s7hw.Subnet,java.util.LinkedHashMap.Entry,s7hw.rack.SubsystemRack,com.google.gson.internal.LinkedTreeMap.Node,com.google.gson.internal.LinkedTreeMap" />
+        <watch expression="((com.google.gson.internal.LinkedTreeMap.Node)((com.google.gson.internal.LinkedTreeMap)((Subnet)((LinkedHashMap.Entry)((LinkedHashMap)hwConfig.station.subnets).entrySet().toArray()[0]).getValue()).nodes).entrySet().toArray()[26]).getValue()" custom="java.util.LinkedHashMap,s7hw.Subnet,java.util.LinkedHashMap.Entry,com.google.gson.internal.LinkedTreeMap.Node,com.google.gson.internal.LinkedTreeMap" />
       </configuration>
     </watches-manager>
   </component>

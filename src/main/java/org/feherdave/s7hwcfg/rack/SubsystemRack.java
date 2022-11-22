@@ -1,13 +1,13 @@
-package s7hw.rack;
+package org.feherdave.s7hwcfg.rack;
 
-import s7hw.HWComponent;
-import s7hw.module.Module;
-import s7hw.module.SlotModule;
-import s7hw.Station;
-import s7hw.Subnet;
-import s7hw.cfgfile.CfgFileSection;
-import s7hw.cfgfile.S7HWCfgFileSectionFormatErrorException;
-import s7hw.module.SubsystemRackSlotModule;
+import org.feherdave.s7hwcfg.HWComponent;
+import org.feherdave.s7hwcfg.Station;
+import org.feherdave.s7hwcfg.cfgfile.CfgFileSection;
+import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.module.Module;
+import org.feherdave.s7hwcfg.module.SlotModule;
+import org.feherdave.s7hwcfg.Subnet;
+import org.feherdave.s7hwcfg.module.SubsystemRackSlotModule;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 public class SubsystemRack extends HWComponent implements Module {
 
     public enum BusRole { ROLE_UNDEFINED, ROLE_MASTER, ROLE_SLAVE }
-    public static String SECTION_HEADER_REGEXP = "^(?<subsystype>DPSUBSYSTEM|IOSUBSYSTEM)\\s+(?<subsysno>[0-9]+)\\s*,\\s*DPADDRESS\\s+(?<address>[0-9]+)\\s*,\\s*\\\"(?<orderNumber>.+?)\\\"\\s*(?:\\\"(?<version>.+?)\\\")?\\s*,\\s*\\\"(?<designation>.+?)\\\"\\s*$";
+    public static String SECTION_HEADER_REGEXP = "^(?<subsystype>DPSUBSYSTEM|IOSUBSYSTEM)\\s+(?<subsysno>[0-9]+)\\s*,\\s*DPADDRESS\\s+(?<address>[0-9]+)\\s*,\\s*\"(?<orderNumber>.+?)\"\\s*(?:\"(?<version>.+?)\")?\\s*,\\s*\"(?<designation>.+?)\"\\s*$";
 
     private Integer address;
     private String orderNumber;
@@ -65,7 +65,7 @@ public class SubsystemRack extends HWComponent implements Module {
             Subnet subnet = station.getSubnets().get(subsysNumber);
 
             if (subnet == null) {
-                System.err.println("Trying to add a device to a non-existent subsystem: " + res.toString());
+                System.err.println("Trying to add a device to a non-existent subsystem: " + res);
             } else {
                 subnet.attachNode(address, res);
                 res.setSubnet(subnet);
@@ -86,6 +86,11 @@ public class SubsystemRack extends HWComponent implements Module {
         if (module instanceof SubsystemRackSlotModule) {
             modules.put(slotNumber, (SubsystemRackSlotModule) module);
         }
+    }
+
+    @Override
+    public Module getModule(Integer slotNumber) {
+        return modules.get(slotNumber);
     }
 
     /**

@@ -1,11 +1,11 @@
-package s7hw.rack;
+package org.feherdave.s7hwcfg.rack;
 
-import s7hw.HWComponent;
-import s7hw.module.Module;
-import s7hw.module.SlotModule;
-import s7hw.Station;
-import s7hw.cfgfile.CfgFileSection;
-import s7hw.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.Station;
+import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.module.Module;
+import org.feherdave.s7hwcfg.HWComponent;
+import org.feherdave.s7hwcfg.module.SlotModule;
+import org.feherdave.s7hwcfg.cfgfile.CfgFileSection;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 public class Rack extends HWComponent {
 
-    public static String SECTION_HEADER_REGEXP = "^RACK\\s+(?<rackNumber>[0-9]+)\\s*,\\s*\\\"(?<orderNumber>.+?)\\\"\\s*,\\s*\\\"(?<name>.+?)\\\"\\s*$";
+    public static String SECTION_HEADER_REGEXP = "^RACK\\s+(?<rackNumber>[0-9]+)\\s*,\\s*\"(?<orderNumber>.+?)\"\\s*,\\s*\"(?<name>.+?)\"\\s*$";
 
     private Integer rackNumber;
     private String rackName;

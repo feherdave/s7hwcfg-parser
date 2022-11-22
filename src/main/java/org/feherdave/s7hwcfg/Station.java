@@ -1,19 +1,22 @@
-package s7hw;
+package org.feherdave.s7hwcfg;
 
-import s7hw.cfgfile.CfgFileSection;
-import s7hw.cfgfile.S7HWCfgFileFormatException;
-import s7hw.cfgfile.S7HWCfgFileSectionFormatErrorException;
-import s7hw.module.SlotModule;
-import s7hw.module.SubSlotModule;
-import s7hw.module.SubsystemRackSlotModule;
-import s7hw.rack.Rack;
-import s7hw.rack.SubsystemRack;
+import org.feherdave.s7hwcfg.cfgfile.CfgFileSection;
+import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileFormatException;
+import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.module.SlotModule;
+import org.feherdave.s7hwcfg.module.SubSlotModule;
+import org.feherdave.s7hwcfg.module.SubsystemRackSlotModule;
+import org.feherdave.s7hwcfg.rack.Rack;
+import org.feherdave.s7hwcfg.rack.SubsystemRack;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class Station extends HWComponent {
+
+    public static String SECTION_HEADER_REGEXP = "^STATION\\s+(?<stationtype>[A-Z0-9]+)\\s*,\\s*\"(?<stationname>.*?)\"\\s*$";
 
     public enum StationType { NOT_IMPLEMENTED, S7_300, S7_400 }
 
@@ -74,9 +77,7 @@ public class Station extends HWComponent {
         // Parse section data
         CfgFileSection stationSection = sectionData.stream().filter(sect -> sect.getSectionHeader().startsWith("STATION")).findFirst().orElseThrow(() -> new S7HWCfgFileFormatException("STATION section doesn't exist"));
 
-        String pattern = "^STATION\\s+(?<stationtype>[A-Z0-9]+)\\s*,\\s*\\\"(?<stationname>\\w*)\\\"\\s*$";
-
-        Pattern p = Pattern.compile(pattern);
+        Pattern p = Pattern.compile(SECTION_HEADER_REGEXP);
 
         Matcher m = p.matcher(stationSection.getSectionHeader());
 
@@ -84,11 +85,16 @@ public class Station extends HWComponent {
         if (m.matches()) {
 
             // Store data from header
-            this.stationType = switch (m.group("stationtype")) {
-                case "S7400" -> StationType.S7_400;
-                case "S7300" -> StationType.S7_300;
-                default -> StationType.NOT_IMPLEMENTED;
-            };
+            switch (m.group("stationtype")) {
+                case "S7400":
+                    this.stationType = StationType.S7_400;
+                    break;
+                case "S7300":
+                    this.stationType = StationType.S7_300;
+                    break;
+                default:
+                    this.stationType = StationType.NOT_IMPLEMENTED;
+            }
             this.stationName = m.group("stationname");
 
             // Parse configuration data
@@ -125,7 +131,7 @@ public class Station extends HWComponent {
     private List<CfgFileSection> parseRacks(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
         List<CfgFileSection> rackSections = sectionData.stream()
                 .filter(data -> data.getSectionHeader().matches(Rack.SECTION_HEADER_REGEXP))
-                .toList();
+                .collect(Collectors.toList());
 
         // This is only for exception handling
         for (CfgFileSection sect : rackSections) {
@@ -144,7 +150,7 @@ public class Station extends HWComponent {
     private List<CfgFileSection> parseSlotModules(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
         List<CfgFileSection> slotModuleSections = sectionData.stream()
                 .filter(data -> data.getSectionHeader().matches(SlotModule.SECTION_HEADER_REGEXP))
-                .toList();
+                .collect(Collectors.toList());
 
         // This is only for exception handling
         for (CfgFileSection sect : slotModuleSections) {
@@ -165,7 +171,7 @@ public class Station extends HWComponent {
     private List<CfgFileSection> parseSubSlotModules(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
         List<CfgFileSection> subSlotModuleSections = sectionData.stream()
                 .filter(data -> data.getSectionHeader().matches(SubSlotModule.SECTION_HEADER_REGEXP))
-                .toList();
+                .collect(Collectors.toList());
 
         // This is only for exception handling
         for (CfgFileSection sect : subSlotModuleSections) {
@@ -189,7 +195,7 @@ public class Station extends HWComponent {
     private List<CfgFileSection> parseSubnets(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
         List<CfgFileSection> subnetSections = sectionData.stream()
                 .filter(data -> data.getSectionHeader().matches(Subnet.SECTION_HEADER_REGEXP))
-                .toList();
+                .collect(Collectors.toList());
 
         // This is only for exception handling
         for (CfgFileSection sect : subnetSections) {
@@ -210,7 +216,7 @@ public class Station extends HWComponent {
     private List<CfgFileSection> parseSubsystemRacks(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
         List<CfgFileSection> subsystemModuleSections = sectionData.stream()
                 .filter(data -> data.getSectionHeader().matches(SubsystemRack.SECTION_HEADER_REGEXP))
-                .toList();
+                .collect(Collectors.toList());
 
         // This is only for exception handling
         for (CfgFileSection sect : subsystemModuleSections) {
@@ -229,7 +235,7 @@ public class Station extends HWComponent {
     private List<CfgFileSection> parseSubsystemRackSlotModules(List<CfgFileSection> sectionData) throws S7HWCfgFileSectionFormatErrorException {
         List<CfgFileSection> subsystemRackSlotModuleSections = sectionData.stream()
                 .filter(data -> data.getSectionHeader().matches(SubsystemRackSlotModule.SECTION_HEADER_REGEXP))
-                .toList();
+                .collect(Collectors.toList());
 
         // This is only for exception handling
         for (CfgFileSection sect : subsystemRackSlotModuleSections) {

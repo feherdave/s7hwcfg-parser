@@ -1,4 +1,4 @@
-package s7hw.cfgfile;
+package org.feherdave.s7hwcfg.cfgfile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +55,7 @@ public class CfgFileSection {
     }
 
     /**
-     * Gets only options data of section header.
+     * Gets only options data of section header (section header lines excluding the first line).
      *
      * @return
      */

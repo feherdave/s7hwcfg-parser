@@ -1,4 +1,4 @@
-package s7hw.cfgfile;
+package org.feherdave.s7hwcfg.cfgfile;
 
 import java.io.*;
 import java.util.*;
@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-public class STEP7HWCfgFile {
+public class CfgFile {
 
     enum FileFormat { READABLE, COMPACT }
 
@@ -15,7 +15,7 @@ public class STEP7HWCfgFile {
     private Map<String, String> metaData = new HashMap<>();
     private List<CfgFileSection> sectionData = new ArrayList<>();
 
-    public STEP7HWCfgFile(File file) throws S7HWCfgFileFormatException, IOException {
+    public CfgFile(File file) throws S7HWCfgFileFormatException, IOException {
 
         FileInputStream fis = new FileInputStream(file);
         InputStreamReader isr = new InputStreamReader(fis);
@@ -98,7 +98,7 @@ public class STEP7HWCfgFile {
 
                             if (m.matches()) {
                                 metaData.put(m.group("metatag"), m.group("metadata"));
-                            };
+                            }
                         }
                     );
 
@@ -127,7 +127,7 @@ public class STEP7HWCfgFile {
                     sectionStringData.add(line.trim());
                 } else {
                     if (!sectionStringData.get(sectionStringData.size() - 1).equals("END")) {
-                        throw new S7HWCfgFileFormatException("END missing in the following section: " + sectionStringData.stream().collect(Collectors.joining("\n")));
+                        throw new S7HWCfgFileFormatException("END missing in the following section: " + String.join("\n", sectionStringData));
                     }
 
                     sectionData.add(new CfgFileSection(sectionStringData));
