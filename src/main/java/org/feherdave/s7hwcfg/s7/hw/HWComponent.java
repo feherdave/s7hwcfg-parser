@@ -1,7 +1,9 @@
-package org.feherdave.s7hwcfg;
+package org.feherdave.s7hwcfg.s7.hw;
 
-import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileSectionFormatErrorException;
-import org.feherdave.s7hwcfg.system.Address;
+import org.feherdave.s7hwcfg.cfgfile.STEP7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.s7.HWConfigElement;
+import org.feherdave.s7hwcfg.s7.hw.module.SubsystemMemberShip;
+import org.feherdave.s7hwcfg.s7.system.Address;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -11,7 +13,7 @@ import java.util.stream.Collectors;
 /**
  * Base class for hardware components.
  */
-public abstract class HWComponent {
+public abstract class HWComponent extends HWConfigElement {
 
     public class AddressArea {
         public Address startAddress;
@@ -29,36 +31,21 @@ public abstract class HWComponent {
         public String comment;
     }
 
-    public static List<String> CONFIG_DATA_KEYWORDS = List.of("LOCAL_IN_ADDRESSES", "LOCAL_OUT_ADDRESSES", "PARAMETER", "SYMBOL");
-
-    protected Map<String, String> stationData = new LinkedHashMap<>();
     protected Map<String, List<AddressArea>> addressAreas = new LinkedHashMap<>();
-
-    public Map<String, String> getStationData() {
-        return stationData;
-    }
+    protected SubsystemMemberShip subsystemMemberShip;
 
     /**
      * Processes the configuration section between START and END
      *
      * @param configSection
      */
-    protected void parseConfigurationData(List<String> configSection) throws S7HWCfgFileSectionFormatErrorException {
+    @Override
+    public void parseConfigurationData(List<String> configSection) throws STEP7HWCfgFileSectionFormatErrorException {
 
-        // Process configuration section
-        configSection.stream()
-                .takeWhile(line -> !CONFIG_DATA_KEYWORDS.contains(line))
-                .forEach(line -> {
-                    Pattern dataKeyValuePair = Pattern.compile("^(?<key>\\w+)\\s+\"(?<value>.*?)\"$");
-                    Matcher dataKeyValuePairMatcher = dataKeyValuePair.matcher(line);
-
-                    if (dataKeyValuePairMatcher.matches()) {
-                        stationData.put(dataKeyValuePairMatcher.group("key"), dataKeyValuePairMatcher.group("value"));
-                    }
-                });
+        super.parseConfigurationData(configSection);
 
         // Process input/output addresses
-        String addressRegex = "^\\s*ADDRESS\\s*(?<startByte>\\d+)\\s*,\\s*(?<startBit>\\d+)\\s*,\\s*(?<lengthByte>\\d+)\\s*,\\s*(?<lengthBit>\\d+)\\s*,\\s*(?<addressType>\\d+)\\s*,\\s*(?<var2>\\d+)\\s*$";
+        String addressRegex = "^\\s*ADDRESS\\s*(?<startByte>\\d+)\\s*,\\s*(?<startBit>\\d+)\\s*,\\s*(?<lengthByte>\\d+)\\s*,\\s*(?<lengthBit>\\d+)\\s*,\\s*(?<addressType1>\\d+)\\s*,\\s*(?<addressType2>\\d+)\\s*$";
 
         // Parse input address definitions
         List<String> inputAddressLines = configSection.stream()
@@ -67,7 +54,6 @@ public abstract class HWComponent {
                 .takeWhile(line -> !CONFIG_DATA_KEYWORDS.contains(line))
                 .filter(line -> line.matches(addressRegex))
                 .collect(Collectors.toList());
-
 
         for (String line : inputAddressLines) {
             addressAreas.putIfAbsent("input", new ArrayList<>());
@@ -81,12 +67,18 @@ public abstract class HWComponent {
                 Integer startBit = Integer.parseInt(m.group("startBit"));
                 Integer areaLength = Integer.parseInt(m.group("lengthByte"));
                 Integer areaLengthOffset = Integer.parseInt(m.group("lengthBit"));
-                Integer addressType = Integer.parseInt(m.group("addressType"));
+                Integer addressType1 = Integer.parseInt(m.group("addressType1"));
+                Integer addressType2 = Integer.parseInt(m.group("addressType2"));
 
                 // That's only a guess... :)
                 Address startAddress;
+                Address addrAreaLength = Address.Plain().b(areaLength);
 
-                switch (addressType) {
+                switch (addressType1) {
+                    case 0:
+                        if (addressType2 == 16) {
+                            addrAreaLength = Address.Plain().x(areaLength, 0);
+                        }
                     case 1:
                     case 2:
                         startAddress = Address.Input().b(startByte);
@@ -99,9 +91,9 @@ public abstract class HWComponent {
                         startAddress = Address.Input().x(startByte, startBit);
                 }
 
-                inputAddresses.add(new AddressArea(startAddress, Address.Plain().b(areaLength)));
+                inputAddresses.add(new AddressArea(startAddress, addrAreaLength));
             } else {
-                throw new S7HWCfgFileSectionFormatErrorException("The following line in section LOCAL_IN_ADDRESSES couldn't be parsed: " + line);
+                throw new STEP7HWCfgFileSectionFormatErrorException("The following line in section LOCAL_IN_ADDRESSES couldn't be parsed: " + line);
             }
         }
 
@@ -125,12 +117,18 @@ public abstract class HWComponent {
                 Integer startBit = Integer.parseInt(m.group("startBit"));
                 Integer areaLength = Integer.parseInt(m.group("lengthByte"));
                 Integer areaLengthOffset = Integer.parseInt(m.group("lengthBit"));
-                Integer addressType = Integer.parseInt(m.group("addressType"));
+                Integer addressType1 = Integer.parseInt(m.group("addressType1"));
+                Integer addressType2 = Integer.parseInt(m.group("addressType2"));
 
                 // That's only a guess... :)
                 Address startAddress;
+                Address addrAreaLength = Address.Plain().b(areaLength);
 
-                switch (addressType) {
+                switch (addressType1) {
+                    case 0:
+                        if (addressType2 == 16) {
+                            addrAreaLength = Address.Plain().x(areaLength, 0);
+                        }
                     case 1:
                     case 2:
                         startAddress = Address.Output().b(startByte);
@@ -138,14 +136,33 @@ public abstract class HWComponent {
                     case 7:
                     case 8:
                         startAddress = Address.Output().w(startByte);
+                        break;
                     default:
                         startAddress = Address.Output().x(startByte, startBit);
                 }
 
-                outputAddresses.add(new AddressArea(startAddress, Address.Plain().b(areaLength)));
+                outputAddresses.add(new AddressArea(startAddress, addrAreaLength));
             } else {
-                throw new S7HWCfgFileSectionFormatErrorException("The following line in section LOCAL_OUT_ADDRESSES couldn't be parsed: " + line);
+                throw new STEP7HWCfgFileSectionFormatErrorException("The following line in section LOCAL_OUT_ADDRESSES couldn't be parsed: " + line);
             }
         }
+    }
+
+    /**
+     * Gets subsystem membership.
+     *
+     * @return
+     */
+    public SubsystemMemberShip getSubsystemMemberShip() {
+        return subsystemMemberShip;
+    }
+
+    /**
+     * Sets subsystem membeership.
+     *
+     * @param subsystemMemberShip
+     */
+    public void setSubsystemMemberShip(SubsystemMemberShip subsystemMemberShip) {
+        this.subsystemMemberShip = subsystemMemberShip;
     }
 }

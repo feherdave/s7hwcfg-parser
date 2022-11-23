@@ -1,4 +1,4 @@
-package org.feherdave.s7hwcfg.system;
+package org.feherdave.s7hwcfg.s7.system;
 
 public class Address {
 

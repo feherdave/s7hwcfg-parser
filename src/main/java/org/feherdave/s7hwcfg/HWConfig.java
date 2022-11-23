@@ -1,8 +1,10 @@
 package org.feherdave.s7hwcfg;
 
 import org.feherdave.s7hwcfg.cfgfile.STEP7HWCfgFile;
-import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileFormatException;
-import org.feherdave.s7hwcfg.cfgfile.S7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.cfgfile.STEP7HWCfgFileFormatException;
+import org.feherdave.s7hwcfg.cfgfile.STEP7HWCfgFileSectionFormatErrorException;
+import org.feherdave.s7hwcfg.s7.Station;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -16,11 +18,11 @@ public class HWConfig {
      * @param hwCfgFile Exported HW config file.
      * @return HWConfig object.
      */
-    public static HWConfig readFromFile(File hwCfgFile) throws S7HWCfgFileFormatException, IOException, S7HWCfgFileSectionFormatErrorException {
-        STEP7HWCfgFile STEP7HWCfgFile = new STEP7HWCfgFile(hwCfgFile);
+    public static HWConfig readFromFile(File hwCfgFile) throws STEP7HWCfgFileFormatException, IOException, STEP7HWCfgFileSectionFormatErrorException {
+        STEP7HWCfgFile step7HWCfgFile = new STEP7HWCfgFile(hwCfgFile);
         HWConfig res = new HWConfig();
 
-        res.setStation(Station.fromSectionData(STEP7HWCfgFile.getSectionData()));
+        res.setStation(step7HWCfgFile.parseSections());
 
         return res;
     }
